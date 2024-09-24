@@ -3,35 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Title } from "../component/title";
 import { ConfirmationButton } from "../component/confirmationButton";
-import logo from "../../img/logo.jpg";
 
 export const Signup = () => {
   const { actions } = useContext(Context);
   const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    const { success} = await actions.login(userName, password);
-
+    const success = await actions.signup(email, password);
+    
     if (success) {
       setMessage("");
-      setMessageType("success"); 
-      setTimeout(() => {
-        if (role === "ADMIN") {
-          window.location.href = `${process.env.BACKEND_URL}/admin/`;
-        } else {
-          navigate("/");
-        }
-      }, 50);
+      setMessageType("success");
+      navigate("/private");
     } else {
-      setMessage("Incorrect username or password");
-      setMessageType("error"); 
+      setMessage("Incorrect email or password");
+      setMessageType("error");
     }
   };
+
 
   return (
     <div className="form-signin w-100 m-auto mt-5 pt-5">
@@ -54,10 +48,10 @@ export const Signup = () => {
             className="form-control"
             id="floatingInput1"
             placeholder="name@example.com"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <label htmlFor="floatingInput">Username</label>
+          <label htmlFor="floatingInput">Email</label>
         </div>
         <div className="form-floating">
           <input
@@ -71,9 +65,9 @@ export const Signup = () => {
           <label htmlFor="floatingPassword">Password</label>
         </div>
         <ConfirmationButton
-          text="Sign in" 
+          text="Sign up" 
           buttonClass="btn w-100 py-2 text-white"
-          onClick={handleLogin} 
+          onClick={handleSignup} 
         />
         <p className="mt-5 mb-3 text-body-secondary">© 2017–2024</p>
       </form>

@@ -19,12 +19,8 @@ export const Signin = () => {
     if (success) {
       setMessage("");
       setMessageType("success");
-      setTimeout(() => {
-        navigate("/");
-      }, 50);
+      navigate("/private");
     } else {
-      // Log to see if we're hitting this case
-      console.log("Login failed");
       setMessage("Incorrect email or password");
       setMessageType("error");
     }

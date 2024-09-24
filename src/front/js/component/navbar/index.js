@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../img/logo.jpg";
@@ -21,7 +21,6 @@ export const Navbar = () => {
 
   return (
     <div>
-      
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <Link className="navbar-brand d-flex align-items-center" to="/">
@@ -67,8 +66,24 @@ export const Navbar = () => {
                   {store.currentUser ? (
                     <>
                       <p className="dropdown-item text-primary-emphasis">
-                        Welcome, {store.currentUser.userName}
+                        Welcome!
                       </p>
+                      <p className="dropdown-item text-primary-emphasis">
+                        Favorites
+                      </p>
+                      {store.favorites && store.favorites.length > 0 ? (
+                        store.favorites.map((favorite, index) => (
+                          <li key={index}>
+                            <Link className="dropdown-item" to={`/favorites/${favorite.id}`}>
+                              {favorite.name}
+                            </Link>
+                          </li>
+                        ))
+                      ) : (
+                        <li>
+                          <span className="dropdown-item text-muted">No favorites added</span>
+                        </li>
+                      )}
                       <li>
                         <span
                           className="dropdown-item border-top border-danger"
@@ -86,7 +101,7 @@ export const Navbar = () => {
                         Sign up
                       </Link>
                       <Link className="dropdown-item" to="/sign-in">
-                        Log in
+                        Sign in
                       </Link>
                     </li>
                   )}

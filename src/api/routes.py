@@ -12,7 +12,11 @@ from api.utils import APIException, generate_sitemap
 api = Blueprint('api', __name__)
 CORS(api)
 
-@api.route("/register", methods=["POST"])
+from flask import jsonify, request
+from werkzeug.security import generate_password_hash
+from flask_jwt_extended import create_access_token
+
+@api.route("/signup", methods=["POST"])
 def register():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
@@ -33,7 +37,15 @@ def register():
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({"msg": "User registered successfully"}), 201
+    # Generate a JWT token for the newly registered user
+    access_token = create_access_token(identity=new_user.id)
+
+    # Return the token and a success message
+    return jsonify({
+        "msg": "User registered successfully",
+        "access_token": access_token
+    }), 201
+
 
 
 @api.route("/login", methods=["POST"])
