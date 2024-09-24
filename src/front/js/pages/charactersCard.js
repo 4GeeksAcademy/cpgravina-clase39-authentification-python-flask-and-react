@@ -43,7 +43,7 @@ export const CharactersCard = ({ characters }) => {
           </p>
           <div className="card-footer text-body-secondary d-flex justify-content-between">
             <Link
-              to={`/characterDetailsCard/${characters.uid}`}
+              to={`/charactersDetailsCard/${characters.uid}`}
               className="btn btn-primary"
             >
               Learn more!

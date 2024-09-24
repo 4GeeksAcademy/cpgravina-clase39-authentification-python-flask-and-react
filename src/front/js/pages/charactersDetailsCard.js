@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/demo.css";
 
-export const CharacterDetailsCard = () => {
+export const CharactersDetailsCard = () => {
   const { store } = useContext(Context);
   const { uid } = useParams();
 
