@@ -5,40 +5,52 @@ import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
-import { Login } from "./pages/login";
-import { Protected } from "./pages/protected";
+import { Signin } from "./pages/signin";
+import { Signup } from "./pages/signup";
+import { Private } from "./pages/private";
 import injectContext from "./store/appContext";
+import { CharactersCard } from "./pages/charactersCard";
+import { CharactersDetailsCard } from "./pages/charactersDetailsCard";
+import { PlanetsCard } from "./pages/planetsCard";
+import { PlanetDetailsCard } from "./pages/planetDetailsCard";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
-//create your first component
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
-    const basename = process.env.BASENAME || "";
+  const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+  if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
+    return <BackendURL />;
 
-    return (
-        <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Navbar />
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Login />} path="/login" />
-                        <Route element={<Protected />} path="/protected" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
-    );
+  return (
+    <div>
+      <BrowserRouter basename={basename}>
+        <ScrollToTop>
+          <Navbar />
+          <Routes>
+            <Route element={<Home />} path="/" />
+            <Route element={<Demo />} path="/demo" />
+            <Route element={<Signin />} path="/sign-in" />
+            <Route element={<Signup />} path="/sign-up" />
+            <Route element={<Private />} path="/private" />
+            <Route path="/charactersCard" element={<CharactersCard />} />
+            <Route
+              path="/charactersDetailsCard/:uid"
+              element={<CharactersDetailsCard />}
+            />
+            <Route
+              path="/planetDetailsCard/:uid"
+              element={<PlanetDetailsCard />}
+            />
+            <Route path="/planetsCard" element={<PlanetsCard />} />
+            <Route element={<h1>Not found!</h1>} />
+          </Routes>
+          <Footer />
+        </ScrollToTop>
+      </BrowserRouter>
+    </div>
+  );
 };
 
 export default injectContext(Layout);
